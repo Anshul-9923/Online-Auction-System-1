@@ -6,6 +6,7 @@ import Loginpage from "./components/Loginpage";
 import MyAccount from "./components/MyAccount";
 import MyProductBid from "./components/MyProductBid";
 import SignUp from "./components/SignUp";
+import { ProductPage } from "./components/ProductPage";
 function App() {
   return (
     <div className="App">
@@ -16,6 +17,8 @@ function App() {
           <Route path="/myaccount" element={<MyAccount />} />
           <Route path="/myproductbid" element={<MyProductBid />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/productpage" element={<ProductPage />} />
+          <Route path="/product/:id" element={<ProductPage />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,27 +1,16 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
     <nav className="bg-gray-900 shadow-lg">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 justify-between">
-          <div className="flex">
-            <a
-              href="#"
-              className="flex flex-shrink-0 items-center text-4xl font-bold text-white"
-            >
-              {" "}
-              Deal{" "}
-            </a>
-            <a
-              href="#"
-              className="flex flex-shrink-0 items-center text-4xl font-bold text-white"
-            >
-              {" "}
-              Steal{" "}
-            </a>
-          </div>
+          <Link to="/">
+            <div className="flex flex-shrink-0 items-center text-4xl font-bold text-white">
+              DealSteal
+            </div>
+          </Link>
           <div className="flex items-center">
             <div className="hidden md:block">
               <a
@@ -56,25 +45,17 @@ const Navbar = () => {
           </div>
           <div className="flex items-center">
             <div className="hidden md:block">
-              <a
-                className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100"
-              >
-              <Link to="/sell">Sell</Link>
+              <a className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100">
+                <Link to="/sell">Sell</Link>
               </a>
-              <a
-                className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100"
-              >
-              <Link to="/about">About Us</Link>
+              <a className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100">
+                <Link to="/about">About Us</Link>
               </a>
-              <a
-                className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100"
-              >
-              <Link to="/login">LogIn</Link>
+              <a className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100">
+                <Link to="/login">LogIn</Link>
               </a>
-              <a
-                className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100"
-              >
-              <Link to="/signup">SignUp</Link>
+              <a className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100">
+                <Link to="/signup">SignUp</Link>
               </a>
             </div>
           </div>
