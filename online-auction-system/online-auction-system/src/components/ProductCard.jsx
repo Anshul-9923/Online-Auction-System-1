@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ProductCard = (props) => {
   return (
-    <Link to={`/product/${product.id}`}>
+    <Link to={`/product/${props.id}`}>
       <div className="overflow-hidden rounded-lg bg-white shadow">
         <img
           // src="https://media.istockphoto.com/id/1279902517/es/foto/s%C3%A9-tan-fuerte-como-naciste-para-ser.jpg?s=612x612&w=0&k=20&c=RPVx_e9KazhmSqjyJN2v_APIUk18qKkmfMSVH7YnJnU="

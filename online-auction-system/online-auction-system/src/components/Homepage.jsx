@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import { Link, useNavigate } from "react-router-dom"
+import Navbar from "./Navbar"
+import Footer from "./Footer"
+import data from "../data"
+import ProductCard from "./ProductCard"
 
 const Homepage = () => {
   let navigate = useNavigate();
@@ -15,7 +17,7 @@ const Homepage = () => {
       <main>
         <div className="container mx-auto py-8">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            <div className="overflow-hidden rounded-lg bg-white shadow">
+            {/* <div className="overflow-hidden rounded-lg bg-white shadow">
             <Link to="/productpage">
               <img
                 src="https://media.istockphoto.com/id/1322158059/es/foto/mancuerna-botella-de-agua-toalla-en-el-banco-en-el-gimnasio.jpg?s=612x612&w=0&k=20&c=6wc4q5s37IHzQh-2uAaaXROj2dSNWYpwFz6oHRQYKsQ="
@@ -416,7 +418,13 @@ const Homepage = () => {
                   Bid Now
                 </button>
               </div>
-            </div>
+            </div> */}
+            {data.map((item, index) => {
+              return <ProductCard
+                name={item.name}
+                key={index}
+              />
+            })}
           </div>
         </div>
       </main>
