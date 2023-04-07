@@ -14,12 +14,12 @@ const Navbar = () => {
             </Link>
             <div className="flex items-center">
               <div className="hidden md:block">
-                <a className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100">
+                <Link to="/categories" className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100">
                   Categories
-                </a>
-                <a className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100">
+                </Link>
+                <Link to="/patents" className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100">
                   Patents
-                </a>
+                </Link>
               </div>
             </div>
             <div className="relative">
@@ -40,18 +40,18 @@ const Navbar = () => {
             </div>
             <div className="flex items-center">
               <div className="hidden md:block">
-                <a className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100">
-                  <Link to="/sell">Sell</Link>
-                </a>
-                <a className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100">
-                  <Link to="/about">About Us</Link>
-                </a>
-                <a className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100">
-                  <Link to="/login">LogIn</Link>
-                </a>
-                <a className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100">
-                  <Link to="/signup">SignUp</Link>
-                </a>
+                <Link to='/sell' className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100">
+                  Sell
+                </Link>
+                <Link to="/about" className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100">
+                  About Us
+                </Link>
+                <Link to="/login" className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100">
+                  LogIn
+                </Link>
+                <Link to="/signup" className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100">
+                  SignUp
+                </Link>
               </div>
             </div>
           </div>

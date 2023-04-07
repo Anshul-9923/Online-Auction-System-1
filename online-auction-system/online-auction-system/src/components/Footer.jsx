@@ -12,14 +12,14 @@ const Footer = () => {
             <div className="w-full md:w-auto">
               <ul className="flex items-center">
                 <li className="mr-6">
-                  <a className="hover:text-white">
-                    <Link to="/about">About Us</Link>
-                  </a>
+                  <Link to="/about" className="hover:text-white">
+                    About Us
+                  </Link>
                 </li>
                 <li className="mr-6">
-                  <a className="hover:text-white">
-                    <Link to="/contact">Contact</Link>
-                  </a>
+                  <Link to="/contact" className="hover:text-white">
+                    Contact
+                  </Link>
                 </li>
               </ul>
             </div>

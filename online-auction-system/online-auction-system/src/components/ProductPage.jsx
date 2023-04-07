@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import data from "../data";
 import Navbar from "./Navbar";
+import io from "socket.io-client";
+
+const socket = io("http://localhost:3000"); // replace with your own server URL
 
 export const ProductPage = () => {
   const { id } = useParams();
@@ -11,33 +14,48 @@ export const ProductPage = () => {
   //   Navigate("./error");
   // }
 
+  useEffect(() => {
+    document.title = product.name;
+  }, []);
+
+  // dynamic bid
+  const [bidPrice, setBidPrice] = useState(null);
+
+  useEffect(() => {
+    // listen for updates to the bid price
+    socket.on("bidPriceUpdate", (newBidPrice) => {
+      setBidPrice(newBidPrice);
+    });
+
+    return () => {
+      socket.off("bidPriceUpdate");
+    };
+  }, []);
+
+  const handleBid = (newBidPrice) => {
+    // send the new bid price to the server
+    socket.emit("newBid", newBidPrice);
+  };
+
   return (
     <>
       <Navbar />
       <div className="container mx-auto p-4 py-10">
         <div className="flex flex-wrap">
-          {/* <!-- Product image --> */}
           <div className="w-full p-4 lg:w-1/2">
             <img
-              src="https://media.istockphoto.com/id/1322158059/es/foto/mancuerna-botella-de-agua-toalla-en-el-banco-en-el-gimnasio.jpg?s=612x612&w=0&k=20&c=6wc4q5s37IHzQh-2uAaaXROj2dSNWYpwFz6oHRQYKsQ="
+              src={product.src}
               alt="Product Image"
               className="w-full"
             />
           </div>
-          {/* <!-- Product description and bid form --> */}
           <div className="w-full p-4 lg:w-1/2">
-            {/* <!-- Product title --> */}
             <h1 className="mb-4 text-6xl font-medium">{product.name}</h1>
-
-            {/* <!-- Product description --> */}
             <p className="mb-4 text-gray-700 text-xl">{product.caption}</p>
-
-            {/* <!-- Current bid --> */}
             <p className="mb-4 text-gray-700 text-3xl">
               Current bid: Rs. {product.bid}
             </p>
-
-            {/* <!-- Bid form --> */}
+            
             <form className="flex flex-wrap">
               <div className="w-full pr-4 lg:w-1/2">
                 <input
@@ -52,6 +70,7 @@ export const ProductPage = () => {
                 <button
                   type="submit"
                   className="rounded-full bg-blue-500 px-4 py-2 font-semibold text-xl text-white hover:bg-blue-600"
+                  onClick={() => handleBid(bidPrice + 1)}
                 >
                   Place Bid
                 </button>

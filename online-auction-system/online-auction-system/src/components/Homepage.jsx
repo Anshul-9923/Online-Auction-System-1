@@ -8,7 +8,7 @@ import ProductCard from "./ProductCard"
 const Homepage = () => {
   let navigate = useNavigate();
   useEffect(() => {
-    document.title = "Home";
+    document.title = "DealSteal";
   }, []);
 
   return (
