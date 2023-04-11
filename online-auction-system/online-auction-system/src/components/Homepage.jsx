@@ -1,14 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom"
 import Navbar from "./Navbar"
 import Footer from "./Footer"
 import data from "../data"
 import ProductCard from "./ProductCard"
+import axios from 'axios'
 
 const Homepage = () => {
   let navigate = useNavigate();
   useEffect(() => {
     document.title = "DealSteal";
+  }, []);
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from server when component mounts
+    axios.get('/').then((response) => {
+      // Update state with retrieved data
+      setProducts(response.data);
+    }).catch((error) => {
+      console.error(error);
+    });
   }, []);
 
   return (
@@ -17,12 +30,12 @@ const Homepage = () => {
       <main>
         <div className="container mx-auto py-8">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {data.map((item, index) => {
+            {products.map((product, index) => {
               return <ProductCard
-                id={item.id}
-                name={item.name}
-                src={item.src}
-                alt={item.alt}
+                id={product.id}
+                name={product.name}
+                src={product.src}
+                alt={product.alt}
                 key={index}
               />
             })}

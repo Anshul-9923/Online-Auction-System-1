@@ -19,7 +19,7 @@ export const ProductPage = () => {
   }, []);
 
   // dynamic bid
-  const [bidPrice, setBidPrice] = useState(null);
+  const [bidPrice, setBidPrice] = useState(product.price);
 
   useEffect(() => {
     // listen for updates to the bid price
@@ -53,7 +53,7 @@ export const ProductPage = () => {
             <h1 className="mb-4 text-6xl font-medium">{product.name}</h1>
             <p className="mb-4 text-gray-700 text-xl">{product.caption}</p>
             <p className="mb-4 text-gray-700 text-3xl">
-              Current bid: Rs. {product.bid}
+              Current bid: Rs. {bidPrice}
             </p>
             
             <form className="flex flex-wrap">

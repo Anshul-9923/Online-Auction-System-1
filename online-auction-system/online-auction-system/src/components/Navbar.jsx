@@ -22,22 +22,14 @@ const Navbar = () => {
                 </Link>
               </div>
             </div>
-            <div className="relative">
-              <input
-                type="text"
-                className="my-3 block w-full appearance-none rounded-full bg-gray-200 py-2 px-10 pl-20 align-middle leading-normal focus:border-gray-500 focus:bg-white focus:outline-none"
-                placeholder="Search"
-              />
-              <div className="absolute top-3 right-0 mt-3 ml-3">
-                <svg
-                  className="h-4 w-4 fill-current text-gray-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M19.707 18.293l-5.5-5.5a8 8 0 1 0-1.414 1.414l5.5 5.5a1 1 0 1 0 1.414-1.414zM4 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8z" />
-                </svg>
-              </div>
+            <div class="relative">
+            <input type="text" class="my-3 block w-full appearance-none rounded-full bg-gray-200 py-2 px-10 pl-10 align-top leading-normal focus:border-gray-500 focus:bg-white focus:outline-none" placeholder="Search" />
+            <div class="absolute top-3 right-2 mt-3 ml-3">
+              <svg class="w-5 h-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M15.5 15.5L20 20M15.5 9.5C15.5 12.5376 12.5376 15.5 9.5 15.5C6.46243 15.5 3.5 12.5376 3.5 9.5C3.5 6.46243 6.46243 3.5 9.5 3.5C12.5376 3.5 15.5 6.46243 15.5 9.5Z"></path>
+              </svg>  
             </div>
+          </div>
             <div className="flex items-center">
               <div className="hidden md:block">
                 <Link to='/sell' className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100">

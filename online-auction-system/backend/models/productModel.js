@@ -1,7 +1,11 @@
 import { Schema as _Schema, model } from 'mongoose';
 const Schema = _Schema;
 
-const itemSchema = new Schema({
+const productSchema = new Schema({
+  id: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
     required: true
@@ -9,6 +13,12 @@ const itemSchema = new Schema({
   description: {
     type: String,
     required: true
+  },
+  als: {
+    type: String
+  },
+  src: {
+    type: String
   },
   startingBid: {
     type: Number,
@@ -55,6 +65,6 @@ const itemSchema = new Schema({
   }
 }, { timestamps: true });
 
-const Item = model('Item', itemSchema);
+const Products = model('ProductSchema', productSchema);
 
-export default Item;
+export default Products;

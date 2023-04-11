@@ -7,6 +7,7 @@ import MyAccount from "./components/MyAccount";
 import MyProductBid from "./components/MyProductBid";
 import SignUp from "./components/SignUp";
 import { ProductPage } from "./components/ProductPage";
+import UploadProductPage from "./components/UploadProductPage";
 function App() {
   return (
     <div className="App">
@@ -14,11 +15,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/login" element={<Loginpage />} />
-          <Route path="/myaccount" element={<MyAccount />} />
-          <Route path="/myproductbid" element={<MyProductBid />} />
+          <Route path="/my-account" element={<MyAccount />} />
+          <Route path="/my-product-bid" element={<MyProductBid />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/productpage" element={<ProductPage />} />
+          <Route path="/product" element={<ProductPage />} />
           <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/upload-product" element={<UploadProductPage />} />
         </Routes>
       </BrowserRouter>
     </div>
