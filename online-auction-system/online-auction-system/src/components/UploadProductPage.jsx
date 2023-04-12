@@ -18,7 +18,7 @@ const UploadProductPage = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [startingBidPrice, setStartingBidPrice] = useState("");
-  const [productImage, setProductImage] = useState(null);
+  const [src, setSrc] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,7 +27,7 @@ const UploadProductPage = () => {
     formData.append("name", name);
     formData.append("description", description);
     formData.append("startingBidPrice", startingBidPrice);
-    formData.append("productImage", productImage);
+    formData.append("src", src);
     // Make API call to the server to submit the form data
     // using a library like Axios or Fetch
     // e.g., axios.post('/products', formData);
@@ -40,13 +40,33 @@ const UploadProductPage = () => {
       name,
       description,
       startingBidPrice,
-      productImage,
+      src,
     });
     // Reset form fields
     setName("");
     setDescription("");
     setStartingBidPrice("");
-    setProductImage(null);
+    setSrc(null);
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+  
+    // Make API call to server to upload file to a file hosting service
+    // and get the URL of the uploaded file
+    try {
+      const response = await axios.post('/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      const imageUrl = response.data.imageUrl;
+      setProductImageUrl(imageUrl);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
   };
 
   return (
@@ -99,7 +119,7 @@ const UploadProductPage = () => {
               type="file"
               className="form-input mt-1 block w-full rounded-sm"
               accept="image/*"
-              onChange={(e) => setProductImage(e.target.files[0])}
+              onChange={handleFileChange}
             />
           </div>
           <div>

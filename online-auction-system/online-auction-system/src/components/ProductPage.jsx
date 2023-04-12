@@ -4,7 +4,7 @@ import data from "../data";
 import Navbar from "./Navbar";
 import io from "socket.io-client";
 
-const socket = io("http://localhost:3000"); // replace with your own server URL
+// const socket = io("http://localhost:3000"); // replace with your own server URL
 
 export const ProductPage = () => {
   const { id } = useParams();
@@ -21,21 +21,21 @@ export const ProductPage = () => {
   // dynamic bid
   const [bidPrice, setBidPrice] = useState(product.price);
 
-  useEffect(() => {
-    // listen for updates to the bid price
-    socket.on("bidPriceUpdate", (newBidPrice) => {
-      setBidPrice(newBidPrice);
-    });
+  // useEffect(() => {
+  //   // listen for updates to the bid price
+  //   socket.on("bidPriceUpdate", (newBidPrice) => {
+  //     setBidPrice(newBidPrice);
+  //   });
 
-    return () => {
-      socket.off("bidPriceUpdate");
-    };
-  }, []);
+  //   return () => {
+  //     socket.off("bidPriceUpdate");
+  //   };
+  // }, []);
 
-  const handleBid = (newBidPrice) => {
-    // send the new bid price to the server
-    socket.emit("newBid", newBidPrice);
-  };
+  // const handleBid = (newBidPrice) => {
+  //   // send the new bid price to the server
+  //   socket.emit("newBid", newBidPrice);
+  // };
 
   return (
     <>

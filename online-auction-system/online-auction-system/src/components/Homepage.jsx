@@ -16,7 +16,7 @@ const Homepage = () => {
 
   useEffect(() => {
     // Fetch data from server when component mounts
-    axios.get('/').then((response) => {
+    axios.get('http://localhost:3000/').then((response) => {
       // Update state with retrieved data
       setProducts(response.data);
     }).catch((error) => {

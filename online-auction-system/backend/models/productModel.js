@@ -50,10 +50,10 @@ const productSchema = new Schema({
     type: Date,
     required: true
   },
-  image: {
-    type: String,
-    required: true
-  },
+  // image: {
+  //   type: String,
+  //   required: true
+  // },
   category: {
     type: String,
     required: true
@@ -65,6 +65,6 @@ const productSchema = new Schema({
   }
 }, { timestamps: true });
 
-const Products = model('ProductSchema', productSchema);
+const Products = model('products', productSchema);
 
 export default Products;
