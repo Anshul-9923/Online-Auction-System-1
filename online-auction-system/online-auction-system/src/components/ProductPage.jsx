@@ -1,41 +1,51 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
-import data from "../data";
+// import data from "../data";
 import Navbar from "./Navbar";
 import io from "socket.io-client";
+import axios from "axios";
 
 // const socket = io("http://localhost:3000"); // replace with your own server URL
 
 export const ProductPage = () => {
   const { id } = useParams();
-  const product = data.find((p) => p.id === id);
 
-  // if(typeof product === "undefined"){
-  //   Navigate("./error");
-  // }
-
+  const [product, setProduct] = useState();
+  
   useEffect(() => {
-    document.title = product.name;
+    // Fetch data from server when component mounts
+    axios.get(`http://localhost:3000/product/${id}`).then((response) => {
+      // Update state with retrieved data
+      console.log(response.data);
+      setProduct(response.data);
+      document.title = response.data.name;
+    }).catch((error) => {
+      console.error(error);
+    });
   }, []);
 
-  // dynamic bid
-  const [bidPrice, setBidPrice] = useState(product.price);
+  // // dynamic bid
+  const [bidPrice, setBidPrice] = useState(0);
 
-  // useEffect(() => {
-  //   // listen for updates to the bid price
-  //   socket.on("bidPriceUpdate", (newBidPrice) => {
-  //     setBidPrice(newBidPrice);
-  //   });
+  useEffect(() => {
+    // listen for updates to the bid price
+    socket.on("bidPriceUpdate", (newBidPrice) => {
+      setBidPrice(newBidPrice);
+    });
 
-  //   return () => {
-  //     socket.off("bidPriceUpdate");
-  //   };
-  // }, []);
+    return () => {
+      socket.off("bidPriceUpdate");
+    };
+  }, []);
 
-  // const handleBid = (newBidPrice) => {
-  //   // send the new bid price to the server
-  //   socket.emit("newBid", newBidPrice);
-  // };
+  const handleBid = (newBidPrice) => {
+    // send the new bid price to the server
+    socket.emit("newBid", newBidPrice);
+  };
+
+  if (!product) {
+    return <div>Loading...</div>; // Replace with your own loading spinner or placeholder
+  }
 
   return (
     <>
@@ -51,7 +61,7 @@ export const ProductPage = () => {
           </div>
           <div className="w-full p-4 lg:w-1/2">
             <h1 className="mb-4 text-6xl font-medium">{product.name}</h1>
-            <p className="mb-4 text-gray-700 text-xl">{product.caption}</p>
+            <p className="mb-4 text-gray-700 text-xl">{product.description}</p>
             <p className="mb-4 text-gray-700 text-3xl">
               Current bid: Rs. {bidPrice}
             </p>

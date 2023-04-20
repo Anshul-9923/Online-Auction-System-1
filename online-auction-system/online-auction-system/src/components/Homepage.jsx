@@ -32,7 +32,7 @@ const Homepage = () => {
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {products.map((product, index) => {
               return <ProductCard
-                id={product.id}
+                id={product._id}
                 name={product.name}
                 src={product.src}
                 alt={product.alt}

@@ -71,6 +71,22 @@ app.get("/", async (req, res) => {
   }
 });
 
+app.get("/product/:id", async (req, res) => {
+  const id = req.params.id;
+  // console.log(`accessed product/${id}`);
+  try {
+    // Query the database to retrieve a random set of 50 products
+    const product = await Products.findById(id);
+    // Send the retrieved data as a response
+    console.log(product);
+    res.json(product);
+  } catch (err) {
+    // Handle any errors that may occur
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 // Define route for adding a product
 app.post("/products", async (req, res) => {
   try {
