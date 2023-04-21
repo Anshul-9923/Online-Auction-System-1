@@ -6,6 +6,7 @@ import cors from "cors";
 import "dotenv/config";
 import multer from "multer";
 import { connectDB, Users, Products, conn } from "./db.js";
+import mongoose from "mongoose";
 
 
 // Set up server
@@ -60,12 +61,10 @@ connectDB(() =>
 app.get("/", async (req, res) => {
   console.log("accessed")
   try {
-    // Query the database to retrieve a random set of 50 products
+    // random set of 50 products
     const products = await Products.aggregate([{ $sample: { size: 50 } }]);
-    // Send the retrieved data as a response
     res.json(products);
   } catch (err) {
-    // Handle any errors that may occur
     console.error(err);
     res.status(500).json({ error: "Server error" });
   }
@@ -73,15 +72,11 @@ app.get("/", async (req, res) => {
 
 app.get("/product/:id", async (req, res) => {
   const id = req.params.id;
-  // console.log(`accessed product/${id}`);
+  console.log(`accessed product/${id}`);
   try {
-    // Query the database to retrieve a random set of 50 products
     const product = await Products.findById(id);
-    // Send the retrieved data as a response
-    console.log(product);
     res.json(product);
   } catch (err) {
-    // Handle any errors that may occur
     console.error(err);
     res.status(500).json({ error: "Server error" });
   }

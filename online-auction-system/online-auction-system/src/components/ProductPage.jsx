@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 import io from "socket.io-client";
 import axios from "axios";
 
-// const socket = io("http://localhost:3000"); // replace with your own server URL
+const socket = io("http://127.0.0.1:5173/");
 
 export const ProductPage = () => {
   const { id } = useParams();
@@ -24,13 +24,14 @@ export const ProductPage = () => {
     });
   }, []);
 
-  // // dynamic bid
+  // dynamic bid
   const [bidPrice, setBidPrice] = useState(0);
 
   useEffect(() => {
     // listen for updates to the bid price
     socket.on("bidPriceUpdate", (newBidPrice) => {
       setBidPrice(newBidPrice);
+      console.log("bid price updated");
     });
 
     return () => {
@@ -78,7 +79,7 @@ export const ProductPage = () => {
               </div>
               <div className="w-full pl-4 lg:w-1/2">
                 <button
-                  type="submit"
+                  // type="submit"
                   className="rounded-full bg-blue-500 px-4 py-2 font-semibold text-xl text-white hover:bg-blue-600"
                   onClick={() => handleBid(bidPrice + 1)}
                 >
@@ -92,24 +93,3 @@ export const ProductPage = () => {
     </>
   );
 };
-
-// // Product.js
-
-// import { useParams } from 'react-router-dom';
-// import productsData from './productsData';
-
-// function Product() {
-//   const { id } = useParams();
-//   const product = productsData.find(p => p.id === parseInt(id));
-
-//   return (
-//     <div>
-//       <h2>{product.title}</h2>
-//       <img src={product.image} alt={product.title} />
-//       <p>{product.description}</p>
-//       <p>Price: {product.price}</p>
-//     </div>
-//   );
-// }
-
-// export default Product;

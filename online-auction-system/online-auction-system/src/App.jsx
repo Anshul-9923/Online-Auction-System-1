@@ -21,6 +21,7 @@ function App() {
           <Route path="/product" element={<ProductPage />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/upload-product" element={<UploadProductPage />} />
+          <Route path="/sell" element={<UploadProductPage />} />
         </Routes>
       </BrowserRouter>
     </div>
