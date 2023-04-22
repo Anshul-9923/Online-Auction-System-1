@@ -3,13 +3,15 @@ import axios from "axios";
 
 // Function to add a product
 const addProduct = async (productData) => {
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  };
   try {
-    // Make a POST request to the server with product data in the request body
-    await axios.post("/products", productData);
-    // Handle success, e.g., show a success message, update UI, etc.
+    await axios.post("http://localhost:3000/products", productData, config);
     console.log("Product added successfully");
   } catch (error) {
-    // Handle error, e.g., show an error message, etc.
     console.error(error);
   }
 };
@@ -18,55 +20,23 @@ const UploadProductPage = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [startingBidPrice, setStartingBidPrice] = useState("");
-  const [src, setSrc] = useState("");
+  const [img, setImg] = useState(null);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Form data to send to the server
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("description", description);
-    formData.append("startingBidPrice", startingBidPrice);
-    formData.append("src", src);
-    // Make API call to the server to submit the form data
-    // using a library like Axios or Fetch
-    // e.g., axios.post('/products', formData);
-    // Replace the above line with actual API call to your server
-    // Handle success and error responses as needed
-
-    addProduct(formData); // added myself ==> to be checked
-
-    console.log("Form submitted:", {
-      name,
-      description,
-      startingBidPrice,
-      src,
-    });
-    // Reset form fields
+  const handleSubmit = (e) => {    
+    // add product
+    const productData = new FormData();
+    productData.append("name", name);
+    productData.append("description", description);
+    productData.append("startingBidPrice", startingBidPrice);
+    productData.append("img", img);
+    addProduct(productData);
+    console.log("Form submitted");
+    
+    // reset product
     setName("");
     setDescription("");
     setStartingBidPrice("");
-    setSrc(null);
-  };
-
-  const handleFileChange = async (e) => {
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append('image', file);
-  
-    // Make API call to server to upload file to a file hosting service
-    // and get the URL of the uploaded file
-    try {
-      const response = await axios.post('/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      const imageUrl = response.data.imageUrl;
-      setProductImageUrl(imageUrl);
-    } catch (error) {
-      console.error('Error uploading file:', error);
-    }
+    setImg(null);
   };
 
   return (
@@ -119,13 +89,14 @@ const UploadProductPage = () => {
               type="file"
               className="form-input mt-1 block w-full rounded-sm"
               accept="image/*"
-              onChange={handleFileChange}
+              onChange={(e) => setImg(e.target.files[0])}
             />
           </div>
           <div>
             <button
               type="submit"
               className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md"
+              onClick={handleSubmit}
             >
               Upload Product Details
             </button>
