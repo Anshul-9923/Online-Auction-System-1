@@ -8,7 +8,7 @@ const ProductCard = (props) => {
         <img
           src={props.src}
           alt={props.alt}
-          className="w-full"
+          className="object-scale-down h-72 w-96"
         />
         <div className="p-4">
           <h3 className="mb-2 text-lg font-bold">{props.name}</h3>
