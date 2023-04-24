@@ -1,4 +1,6 @@
 // Import required modules
+import fs from 'fs';
+import admin from 'firebase-admin';
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
@@ -9,6 +11,26 @@ import { connectDB, Users, Products, conn } from "./db.js";
 import bodyParser from "body-parser";
 
 // Set up server
+const credentials=JSON.parse(
+  fs.readFileSync('./credentials.json')
+);
+admin.initializeApp({
+  credential: admin.credential.cert(credentials),
+})
+async function createUserWithEmailAndPassword(auth, email, password) {
+  try {
+    const userRecord = await admin.auth().createUser({
+      email: email,
+      password: password,
+    });
+
+    console.log('User created successfully:', userRecord.uid);
+    return userRecord;
+  } catch (error) {
+    console.error('Error creating new user:', error);
+    throw error;
+  }
+}
 const app = express();
 const server = createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });
@@ -77,6 +99,34 @@ app.post("/products", upload.single('img'), async (req, res) => {
   }
 });
 
+app.post("/signup", async (req, res) => {
+  console.log("accessed some signup");
+  const { email, password, name } = req.body;
+  try {
+    console.log("accessed signup", req.body);
+    const userRecord = await createUserWithEmailAndPassword(admin.auth(), email, password);
+    const id = userRecord.uid;
+
+    // Create a new user object with data from request body
+    const newUser = new Users({ id, email, name, password });
+
+    // Save the new user to the database
+    await newUser.save();
+
+    res.json({ message: "User added successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+
+// Start server
+connectDB(() =>
+  app.listen(3000, () => {
+    console.log("Server started on port 3000");
+  })
+);
 
 
 // Set up initial bid price
