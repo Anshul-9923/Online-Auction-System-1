@@ -8,6 +8,9 @@ import MyProductBid from "./components/MyProductBid";
 import SignUp from "./components/SignUp";
 import { ProductPage } from "./components/ProductPage";
 import UploadProductPage from "./components/UploadProductPage";
+import Aboutpage from "./components/Aboutpage";
+
+
 function App() {
   return (
     <div className="App">
@@ -22,6 +25,7 @@ function App() {
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/upload-product" element={<UploadProductPage />} />
           <Route path="/sell" element={<UploadProductPage />} />
+          <Route path="/about" element={<Aboutpage />} />
         </Routes>
       </BrowserRouter>
     </div>

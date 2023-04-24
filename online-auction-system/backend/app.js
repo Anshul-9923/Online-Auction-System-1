@@ -18,23 +18,12 @@ app.use(express.json());
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true,}));
 
-// Set up initial bid price
-let currentBid = 0;
-
-// Listen for incoming socket connections
-io.on("connection", (socket) => {
-  socket.emit("currentBid", currentBid); // Send current bid price to new client
-
-  socket.on("newBid", (bid) => {
-    // Listen for new bid from clients
-    if (bid > currentBid) {
-      // Check if bid is higher than current bid
-      currentBid = bid; // Update current bid and broadcast to all clients
-      io.emit("currentBid", currentBid);
-    }
-  });
-});
-
+// Start server
+connectDB(() =>
+  server.listen(3000, () => {
+    console.log("Server started on port 3000");
+  })
+);
 
 // Handle file uploads using multer middleware
 const storage = multer.diskStorage({
@@ -48,15 +37,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-
-
-
-// Start server
-connectDB(() =>
-  app.listen(3000, () => {
-    console.log("Server started on port 3000");
-  })
-);
 
 app.get("/", async (req, res) => {
   console.log("accessed")
@@ -95,4 +75,25 @@ app.post("/products", upload.single('img'), async (req, res) => {
     console.error(err);
     res.status(500).json({ error: "Server error" });
   }
+});
+
+
+
+// Set up initial bid price
+let currentBid = 0;
+
+// Listen for incoming socket connections
+io.on("connection", (socket) => {
+  console.log("on connection");
+  socket.emit("currentBid", currentBid); // Send current bid price to new client
+
+  socket.on("newBid", (bid) => {
+    console.log(`new bid done: ${bid}`)
+    // Listen for new bid from clients
+    if (bid > currentBid) {
+      currentBid = bid;
+      console.log(`new bid set to ${currentBid}`);
+      io.emit("currentBid", currentBid);
+    }
+  });
 });

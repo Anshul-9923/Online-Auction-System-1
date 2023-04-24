@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 import io from "socket.io-client";
 import axios from "axios";
 
-const socket = io("http://127.0.0.1:5173/");
+const socket = io("http://localhost:3000/");
 
 export const ProductPage = () => {
   const { id } = useParams();
@@ -26,20 +26,27 @@ export const ProductPage = () => {
 
   // dynamic bid
   const [bidPrice, setBidPrice] = useState(0);
+  const [bid, setBid] = useState(0);
 
   useEffect(() => {
     // listen for updates to the bid price
-    socket.on("bidPriceUpdate", (newBidPrice) => {
+    // socket.on("bidPriceUpdate", (newBidPrice) => {
+    //   setBidPrice(newBidPrice);
+    //   console.log("bid price updated");
+    // });
+
+    socket.on("currentBid", (newBidPrice) => {
       setBidPrice(newBidPrice);
       console.log("bid price updated");
     });
 
     return () => {
-      socket.off("bidPriceUpdate");
+      socket.off("currentBid");
     };
   }, []);
 
-  const handleBid = (newBidPrice) => {
+  const handleBid = (e, newBidPrice) => {
+    e.preventDefault();
     // send the new bid price to the server
     socket.emit("newBid", newBidPrice);
   };
@@ -75,13 +82,14 @@ export const ProductPage = () => {
                   placeholder="Enter bid amount"
                   min="1"
                   max="999999999999"
+                  onChange={(e) => setBid(e.target.valueAsNumber)}
                 />
               </div>
               <div className="w-full pl-4 lg:w-1/2">
                 <button
                   // type="submit"
                   className="rounded-full bg-blue-500 px-4 py-2 font-semibold text-xl text-white hover:bg-blue-600"
-                  onClick={() => handleBid(bidPrice + 1)}
+                  onClick={(e) => handleBid(e, bid)}
                 >
                   Place Bid
                 </button>
