@@ -20,11 +20,11 @@ const userSchema = new Schema({
   },
   address: {
     type: String,
-    required: true
+    required: false
   },
   phone: {
     type: String,
-    required: true
+    required: false
   },
   isAdmin: {
     type: Boolean,

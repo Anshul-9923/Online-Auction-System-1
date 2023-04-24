@@ -1,109 +1,58 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import Navbar from "./Navbar";
+import axios from "axios";
 
-const SignUp = (props) => {
-  let navigate = useNavigate();
+const SignUp = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const createAccount = async (event) => {
+    event.preventDefault();
+    try {
+      if (password != confirmPassword) {
+        setError("Password and confirm password do not match");
+        return;
+      }
+      console.log("whatever");
+      // console.log(email, password);
+      const user = {
+        "name": name,
+        "email": email,
+        "password": password
+      }
+      console.log(user);
+      await axios.post('http://localhost:3000/signup', user).then(console.log("sent user cred"));
+      // await createUserWithEmailAndPassword(getAuth(), email, password);
+      console.log("whatever2");
+      navigate("/");
+    } catch (e) {
+      setError(e.message);
+    }
+  };
+
   useEffect(() => {
     document.title = "Sign Up";
   }, []);
+
   return (
     <>
-      {/* <nav className="bg-gray-900 shadow-lg">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 justify-between">
-            <div className="flex">
-              <a
-                href="#"
-                className="flex flex-shrink-0 items-center text-4xl font-bold text-white"
-              >
-                {" "}
-                Deal{" "}
-              </a>
-              <a
-                href="#"
-                className="flex flex-shrink-0 items-center text-4xl font-bold text-white"
-              >
-                {" "}
-                Steal{" "}
-              </a>
-            </div>
-            <div className="flex items-center">
-              <div className="hidden md:block">
-                <a
-                  href="#"
-                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100"
-                >
-                  Categories
-                </a>
-                <a
-                  href="#"
-                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100"
-                >
-                  Patents
-                </a>
-              </div>
-            </div>
-            <div className="relative">
-              <input
-                type="text"
-                className="my-3 block w-full appearance-none rounded-full bg-gray-200 py-2 px-10 pl-20 align-middle leading-normal focus:border-gray-500 focus:bg-white focus:outline-none"
-                placeholder="Search"
-              />
-              <div className="absolute top-3 right-0 mt-3 ml-3">
-                <svg
-                  className="h-4 w-4 fill-current text-gray-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M19.707 18.293l-5.5-5.5a8 8 0 1 0-1.414 1.414l5.5 5.5a1 1 0 1 0 1.414-1.414zM4 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8z" />
-                </svg>
-              </div>
-            </div>
-            <div className="flex items-center">
-              <div className="hidden md:block">
-                <a
-                  href="#"
-                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100"
-                >
-                  Sell
-                </a>
-                <a
-                  href="#"
-                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100"
-                >
-                  About Us
-                </a>
-                <a
-                //   href="#"
-                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100"
-                  onClick={() =>
-                    {navigate("./login", { replace: false }); console.log("clicked");}
-                  }
-                >
-                  LogIn
-                </a>
-                <a
-                  href="#"
-                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-100 hover:bg-gray-700 hover:text-gray-100"
-                >
-                  SignUp
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav> */}
       <Navbar />
       <main>
         <div className="mx-auto mt-20 mb-20 max-w-xl rounded-lg bg-white p-6 shadow-lg">
           <h2 className="mb-6 text-2xl font-bold text-gray-800">
             Create an Account
           </h2>
-          <form action="#" method="POST">
+          {error && <p className="error">{error}</p>}
+          <form>
             <div className="mb-4">
               <label
-                for="name"
+                htmlFor="name"
                 className="mb-2 block font-semibold text-gray-700"
               >
                 Full Name
@@ -113,12 +62,15 @@ const SignUp = (props) => {
                 name="name"
                 id="name"
                 className="w-full rounded-lg border border-gray-400 p-2"
+                placeholder="Your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 required
               />
             </div>
             <div className="mb-4">
               <label
-                for="email"
+                htmlFor="email"
                 className="mb-2 block font-semibold text-gray-700"
               >
                 Email Address
@@ -127,13 +79,16 @@ const SignUp = (props) => {
                 type="email"
                 name="email"
                 id="email"
+                placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full rounded-lg border border-gray-400 p-2"
                 required
               />
             </div>
             <div className="mb-4">
               <label
-                for="password"
+                htmlFor="password"
                 className="mb-2 block font-semibold text-gray-700"
               >
                 Password
@@ -142,13 +97,16 @@ const SignUp = (props) => {
                 type="password"
                 name="password"
                 id="password"
+                placeholder="Your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full rounded-lg border border-gray-400 p-2"
                 required
               />
             </div>
             <div className="mb-4">
               <label
-                for="confirm_password"
+                htmlFor="confirm_password"
                 className="mb-2 block font-semibold text-gray-700"
               >
                 Confirm Password
@@ -157,12 +115,16 @@ const SignUp = (props) => {
                 type="password"
                 name="confirm_password"
                 id="confirm_password"
+                placeholder="Re-renter your password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full rounded-lg border border-gray-400 p-2"
                 required
               />
             </div>
             <button
               type="submit"
+              onClick={e => createAccount(e)}
               className="w-full rounded-lg bg-gray-800 py-2 px-4 font-semibold text-white"
             >
               Create Account
