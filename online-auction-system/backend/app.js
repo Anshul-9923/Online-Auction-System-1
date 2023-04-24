@@ -122,11 +122,6 @@ app.post("/signup", async (req, res) => {
 
 
 // Start server
-connectDB(() =>
-  app.listen(3000, () => {
-    console.log("Server started on port 3000");
-  })
-);
 
 
 // Set up initial bid price
