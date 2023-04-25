@@ -1,20 +1,31 @@
-<div className="relative overflow-hidden rounded-lg shadow-lg w-100 h-100">
-  <img
-    src="https://media.istockphoto.com/id/1322158059/es/foto/mancuerna-botella-de-agua-toalla-en-el-banco-en-el-gimnasio.jpg?s=612x612&w=0&k=20&c=6wc4q5s37IHzQh-2uAaaXROj2dSNWYpwFz6oHRQYKsQ="
-    alt="Product"
-    className="object-cover w-full h-64 sm:h-72 lg:h-96"
-  />
-  <div className="absolute inset-0 bg-gradient-to-t from-gray-800  to-transparent"></div>
-    <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-      <h3 className="text-lg font-bold">Product Name</h3>
-      <p className="mt-2 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget semper mi. Duis eu tellus risus.</p>
-      <div className="flex">
-        <div>
-          <p className="mt-4 font-bold text-xl">Current Bid: Rs. 9696</p>
-        </div>
-        <div>
-          <button className="mt-3 absolute right-4 bottom-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"> Bid Now </button>
-        </div>        
+<div className="my-10 max-w-lg mx-auto bg-white rounded-lg shadow-lg">
+  <div className="p-6">
+    <h1 className="text-2xl font-bold mb-4">Upload Your Product Details</h1>
+    <form className="space-y-4">
+      <div>
+        <label className="block font-medium text-gray-700">Product Name</label>
+        <input type="text" className="form-input border mt-1 block w-full rounded-md text-lg" placeholder="Enter product name" />
       </div>
-    </div>
+      <div>
+        <label className="block font-medium text-gray-700">Product Description</label>
+        <textarea className="form-textarea border mt-1 block w-full rounded-md text-lg" placeholder="Enter product description"></textarea>
+      </div>
+      <div>
+        <label className="block font-medium text-gray-700">Starting Bid Price</label>
+        <input type="number" className="form-input border mt-1 block w-full rounded-md text-lg" placeholder="Enter starting bid price" min="1" max="999999999999" />
+        <button type="submit" className=" bg-blue-500 my-2 hover:bg-blue-600  text-white font-bold py-2 px-4 rounded-md">Get an Estimated Price</button>
+      </div>
+      <div>
+        <label className="block font-medium text-gray-700">Product Image</label>
+        <input type="file" className="form-input border mt-1 block w-full rounded-sm text-lg" />
+      </div>
+      <div>
+        <label className="block font-medium text-gray-700">Bid Closing Date and Time</label>
+        <input type="datetime-local" className="form-input border mt-1 block w-full rounded-sm text-lg" />
+      </div>
+      <div>
+        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md">Upload Product Details</button>
+      </div>
+    </form>
+  </div>
 </div>

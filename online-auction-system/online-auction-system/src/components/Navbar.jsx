@@ -28,7 +28,7 @@ const Navbar = () => {
                 DealSteal
               </div>
             </Link>
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <div className="hidden md:block">
                 <Link
                   to="/categories"
@@ -43,7 +43,7 @@ const Navbar = () => {
                   Patents
                 </Link>
               </div>
-            </div>
+            </div> */}
             <Search />
             <div className="flex items-center">
               <div className="hidden md:block">
