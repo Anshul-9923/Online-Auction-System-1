@@ -97,6 +97,18 @@ app.post("/products", upload.single("img"), async (req, res) => {
   }
 });
 
+// Define a route for handling search requests
+app.get('/products/search', async (req, res) => {
+  try {
+    const searchQuery = req.query.query;
+    const products = await Products.find({ name: { $regex: searchQuery, $options: 'i' } });
+    res.json(products);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 app.post("/signup", async (req, res) => {
   console.log("accessed some signup");
   const { email, password, name } = req.body;

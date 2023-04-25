@@ -1,18 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Search from "./Search";
 
 const Navbar = () => {
+
   return (
     <>
       <nav className="bg-gray-900 shadow-lg">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 justify-between">
             <Link to="/">
-              <div className="flex flex-shrink-0 items-center text-4xl font-bold text-white">
+              <div className="flex flex-shrink-0 items-center text-4xl font-bold py-2 text-white">
                 DealSteal
               </div>
             </Link>
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <div className="hidden md:block">
                 <Link
                   to="/categories"
@@ -27,8 +29,8 @@ const Navbar = () => {
                   Patents
                 </Link>
               </div>
-            </div>
-            <div className="relative">
+            </div> */}
+            {/* <div className="relative">
               <input
                 type="text"
                 className="my-3 block w-full appearance-none rounded-full bg-gray-200 py-2 px-10 pl-10 align-top leading-normal focus:border-gray-500 focus:bg-white focus:outline-none"
@@ -47,7 +49,8 @@ const Navbar = () => {
                   <path d="M15.5 15.5L20 20M15.5 9.5C15.5 12.5376 12.5376 15.5 9.5 15.5C6.46243 15.5 3.5 12.5376 3.5 9.5C3.5 6.46243 6.46243 3.5 9.5 3.5C12.5376 3.5 15.5 6.46243 15.5 9.5Z"></path>
                 </svg>
               </div>
-            </div>
+            </div> */}
+            <Search />
             <div className="flex items-center">
               <div className="hidden md:block">
                 <Link
