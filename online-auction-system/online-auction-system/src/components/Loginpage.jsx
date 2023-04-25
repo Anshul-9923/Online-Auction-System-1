@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { initializeApp } from "firebase/app";
+import AuthContext from '../AuthContext';
 
 
 const Loginpage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  
+  const { authentic, setAuthentic } = useContext(AuthContext);
 
   useEffect(() => {
     // Initialize Firebase
@@ -31,11 +35,15 @@ const Loginpage = () => {
 const login = async (email, password) => {
   try {
     const auth = getAuth();
+    console.log("before authentic", authentic);
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    setAuthentic(true)
+    console.log("after authentic", authentic);
     const user = userCredential.user;
     return user;
   } catch (error) {
     // Handle error
+    alert("Wrong Password");
     console.error(error);
     throw error;
   }
