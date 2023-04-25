@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import Navbar from "./Navbar";
 import axios from "axios";
@@ -22,12 +22,14 @@ const SignUp = () => {
       console.log("whatever");
       // console.log(email, password);
       const user = {
-        "name": name,
-        "email": email,
-        "password": password
-      }
+        name: name,
+        email: email,
+        password: password,
+      };
       console.log(user);
-      await axios.post('http://localhost:3000/signup', user).then(console.log("sent user cred"));
+      await axios
+        .post("http://localhost:3000/signup", user)
+        .then(console.log("sent user cred"));
       // await createUserWithEmailAndPassword(getAuth(), email, password);
       console.log("whatever2");
       navigate("/");
@@ -79,7 +81,7 @@ const SignUp = () => {
                 type="email"
                 name="email"
                 id="email"
-                placeholder="Your email"
+                placeholder="Your email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full rounded-lg border border-gray-400 p-2"
@@ -124,7 +126,7 @@ const SignUp = () => {
             </div>
             <button
               type="submit"
-              onClick={e => createAccount(e)}
+              onClick={(e) => createAccount(e)}
               className="w-full rounded-lg bg-gray-800 py-2 px-4 font-semibold text-white"
             >
               Create Account
@@ -133,9 +135,12 @@ const SignUp = () => {
           <hr className="my-6 border-gray-400" />
           <p className="font-semibold text-gray-800">
             Already have an account?{" "}
-            <a href="#" className="font-semibold text-gray-800 underline">
+            <Link
+              to={"/login"}
+              className="font-semibold text-gray-800 underline"
+            >
               Login
-            </a>
+            </Link>
           </p>
         </div>
       </main>
