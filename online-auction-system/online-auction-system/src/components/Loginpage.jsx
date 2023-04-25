@@ -1,11 +1,17 @@
 import React, { useEffect } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { Link } from "react-router-dom";
 
 const Loginpage = () => {
   useEffect(() => {
     document.title = "Login";
   }, []);
+
+  const handelSubmit = () => {
+    
+  }
+
   return (
     <>
       <Navbar />
@@ -46,8 +52,8 @@ const Loginpage = () => {
               />
             </div>
             <button
-              type="submit"
               className="bg-gray-800 text-white py-2 px-4 rounded-lg font-semibold w-full"
+              onClick={() => handelSubmit()}
             >
               Login
             </button>
@@ -55,9 +61,9 @@ const Loginpage = () => {
           <hr className="my-6 border-gray-400" />
           <p className="text-gray-800 font-semibold">
             Don't have an account yet?{" "}
-            <a href="#" className="text-gray-800 font-semibold underline">
+            <Link to={'/signup'} className="text-gray-800 font-semibold underline">
               Signup
-            </a>
+            </Link>
           </p>
         </div>
       </main>
