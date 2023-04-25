@@ -1,9 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Search from "./Search";
+import axios from "axios";
+import { useState } from "react";
+
 
 const Navbar = () => {
-
+  // const [res, setRes] = useState("")
+  // function handleQuery(query)
+  // {
+  //   axios.post("http://localhost:5000/predict", query).then((response)=>{ 
+  //     console.log(response.data.result); 
+  //     setRes(response.data.result); 
+  //   }).catch((error)=>{ 
+  //     console.log(error); 
+  //   })
+  // }
   return (
     <>
       <nav className="bg-gray-900 shadow-lg">
@@ -50,6 +62,7 @@ const Navbar = () => {
                 </svg>
               </div>
             </div> */}
+            {/* <button  onClick={handleQuery("Antique Chair")}>predict item</button> */}
             <Search />
             <div className="flex items-center">
               <div className="hidden md:block">

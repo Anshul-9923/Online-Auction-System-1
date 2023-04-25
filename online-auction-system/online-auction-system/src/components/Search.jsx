@@ -4,13 +4,13 @@ import axios from "axios";
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-
   const handleInputChange = async (e) => {
     const inputValue = e.target.value.trim();
     setSearchQuery(inputValue);
 
     // Fetch products from the server based on search query
     if (inputValue.length > 0) {
+      console.log("working.....")
       await axios.get(`http://localhost:3000/products/search?query=${inputValue}`).then((res) => {
         console.log(res.data);
         setSuggestions(res.data);
@@ -23,7 +23,7 @@ const Search = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative z-50">
       <input
         type="text"
         className="my-3 block w-full appearance-none rounded-full bg-gray-200 py-2 px-10 pl-10 align-top leading-normal focus:border-gray-500 focus:bg-white focus:outline-none"
@@ -45,9 +45,9 @@ const Search = () => {
         </svg>
       </div>
 
-      <ul id="suggestionsList">
+      <ul id="suggestionsList" className="bg-white flex flex-col border p-2 rounded-xl mt-4">
         {suggestions.map((product, key) => (
-          <li key={key}>{product.name}</li>
+          <li className="hover:bg-black hover:text-white p-2 rounded-xl" key={key}>{product.name}</li>
         ))}
       </ul>
     </div>

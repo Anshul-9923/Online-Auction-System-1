@@ -23,7 +23,7 @@ const ProductCard = (props) => {
           </button>
         </div>
       </div> */}
-      <div className="relative overflow-hidden rounded-lg shadow-lg w-100 h-100">
+      <div className="relative overflow-hidden rounded-lg shadow-lg w-100 h-100 hover:scale-125 transition-all duration-500 cursor-pointer">
         <img
           src={props.src}
           alt={props.alt}
