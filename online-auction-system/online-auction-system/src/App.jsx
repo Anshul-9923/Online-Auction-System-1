@@ -9,7 +9,7 @@ import SignUp from "./components/SignUp";
 import { ProductPage } from "./components/ProductPage";
 import UploadProductPage from "./components/UploadProductPage";
 import Aboutpage from "./components/Aboutpage";
-
+import MyBids from "./components/MyBids";
 
 function App() {
   return (
@@ -26,6 +26,7 @@ function App() {
           <Route path="/upload-product" element={<UploadProductPage />} />
           <Route path="/sell" element={<UploadProductPage />} />
           <Route path="/about" element={<Aboutpage />} />
+          <Route path="/mybids" element={<MyBids />} />
         </Routes>
       </BrowserRouter>
     </div>

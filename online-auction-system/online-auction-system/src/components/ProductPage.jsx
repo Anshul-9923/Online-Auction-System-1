@@ -35,9 +35,14 @@ export const ProductPage = () => {
   const bidInputRef = useRef(null);
 
   useEffect(() => {
-    socket.on("currentBid", (newBidPrice) => {
-      setBidPrice(newBidPrice);
-      console.log("bid price updated");
+    socket.on("currentBid", (bidData) => {
+      const newBid = bidData.newBid;
+      const itemId = bidData.itemId;
+      console.log("newbid", newBid, "itemId", itemId);
+      if(itemId === id){
+        setBidPrice(newBid);
+        console.log("bid price updated");
+      }
     });
 
     return () => {
@@ -47,18 +52,21 @@ export const ProductPage = () => {
 
   const handleBid = (e, newBidPrice) => {
     e.preventDefault();
+    
     // send the new bid price to the server
-    socket.emit("newBid", newBidPrice);
-    setShowBidAffirmation(true); // show the bid affirmation popup
+    socket.emit("newBid", {"newBid": newBidPrice, "itemId": id});
     console.log("bidAffirmation", showBidAffirmation);
+
+    // pop-up
+    setShowBidAffirmation(true);
     setTimeout(() => {
-      setShowBidAffirmation(false); // hide the bid affirmation popup after 3 seconds
+      setShowBidAffirmation(false);
     }, 3000);
     bidInputRef.current.value = 0;
   };
 
   if (!product) {
-    return <div>Loading...</div>; // Replace with your own loading spinner or placeholder
+    return <div>Loading...</div>;
   }
 
   return (

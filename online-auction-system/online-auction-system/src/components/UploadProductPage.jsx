@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Navbar from "./Navbar";
 
 // Function to add a product
 const addProduct = async (productData) => {
   const config = {
     headers: {
-      'Content-Type': 'multipart/form-data'
-    }
+      "Content-Type": "multipart/form-data",
+    },
   };
   try {
     await axios.post("http://localhost:3000/products", productData, config);
@@ -22,7 +23,7 @@ const UploadProductPage = () => {
   const [startingBidPrice, setStartingBidPrice] = useState("");
   const [img, setImg] = useState(null);
 
-  const handleSubmit = (e) => {    
+  const handleSubmit = (e) => {
     // add product
     const productData = new FormData();
     productData.append("name", name);
@@ -31,7 +32,7 @@ const UploadProductPage = () => {
     productData.append("img", img);
     addProduct(productData);
     console.log("Form submitted");
-    
+
     // reset product
     setName("");
     setDescription("");
@@ -41,6 +42,7 @@ const UploadProductPage = () => {
 
   return (
     <>
+      <Navbar />
       <div className="max-w-lg mx-auto p-6">
         <h1 className="text-2xl font-bold mb-4">Upload Your Product Details</h1>
         <form className="space-y-4">
@@ -50,7 +52,7 @@ const UploadProductPage = () => {
             </label>
             <input
               type="text"
-              className="form-input mt-1 block w-full rounded-md"
+              className="form-input border mt-1 block w-full rounded-md"
               placeholder="Enter product name"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -61,7 +63,7 @@ const UploadProductPage = () => {
               Product Description
             </label>
             <textarea
-              className="form-textarea mt-1 block w-full rounded-md"
+              className="form-textarea mt-1 border block w-full rounded-md"
               placeholder="Enter product description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -73,7 +75,7 @@ const UploadProductPage = () => {
             </label>
             <input
               type="number"
-              className="form-input mt-1 block w-full rounded-md"
+              className="form-input mt-1 border block w-full rounded-md"
               placeholder="Enter starting bid price "
               min="1"
               max="999999999999"

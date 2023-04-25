@@ -1,6 +1,6 @@
 // Import required modules
-import fs from 'fs';
-import admin from 'firebase-admin';
+import fs from "fs";
+import admin from "firebase-admin";
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
@@ -11,12 +11,10 @@ import { connectDB, Users, Products, conn } from "./db.js";
 import bodyParser from "body-parser";
 
 // Set up server
-const credentials=JSON.parse(
-  fs.readFileSync('./credentials.json')
-);
+const credentials = JSON.parse(fs.readFileSync("./credentials.json"));
 admin.initializeApp({
   credential: admin.credential.cert(credentials),
-})
+});
 async function createUserWithEmailAndPassword(auth, email, password) {
   try {
     const userRecord = await admin.auth().createUser({
@@ -24,12 +22,12 @@ async function createUserWithEmailAndPassword(auth, email, password) {
       password: password,
     });
 
-    console.log('User created successfully:', userRecord.uid);
+    console.log("User created successfully:", userRecord.uid);
     return userRecord;
   } catch (error) {
-    console.error('Error creating new user:', error);
+    console.error("Error creating new user:", error);
     throw error;
-  }
+  }
 }
 const app = express();
 const server = createServer(app);
@@ -37,8 +35,8 @@ const io = new Server(server, { cors: { origin: "*" } });
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({extended: true,}));
+app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Start server
 connectDB(() =>
@@ -50,18 +48,18 @@ connectDB(() =>
 // Handle file uploads using multer middleware
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'public/images');
+    cb(null, "public/images");
   },
   filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, uniqueSuffix + '-' + file.originalname);
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + "-" + file.originalname);
   },
 });
 
 const upload = multer({ storage });
 
 app.get("/", async (req, res) => {
-  console.log("accessed")
+  console.log("accessed");
   try {
     // random set of 50 products
     const products = await Products.aggregate([{ $sample: { size: 50 } }]);
@@ -85,8 +83,8 @@ app.get("/product/:id", async (req, res) => {
 });
 
 // Define route for adding a product
-app.post("/products", upload.single('img'), async (req, res) => {
-  console.log("first")
+app.post("/products", upload.single("img"), async (req, res) => {
+  console.log("first");
   try {
     // Create a new product object with data from request body
     console.log("Accessed:", req.body);
@@ -104,7 +102,11 @@ app.post("/signup", async (req, res) => {
   const { email, password, name } = req.body;
   try {
     console.log("accessed signup", req.body);
-    const userRecord = await createUserWithEmailAndPassword(admin.auth(), email, password);
+    const userRecord = await createUserWithEmailAndPassword(
+      admin.auth(),
+      email,
+      password
+    );
     const id = userRecord.uid;
 
     // Create a new user object with data from request body
@@ -116,29 +118,26 @@ app.post("/signup", async (req, res) => {
     res.json({ message: "User added successfully" });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Server error" });
-  }
+    res.status(500).json({ error: "Server error" });
+  }
 });
-
-
-// Start server
-
-
-// Set up initial bid price
-let currentBid = 0;
 
 // Listen for incoming socket connections
 io.on("connection", (socket) => {
   console.log("on connection");
-  socket.emit("currentBid", currentBid); // Send current bid price to new client
 
-  socket.on("newBid", (bid) => {
-    console.log(`new bid done: ${bid}`)
+  socket.on("newBid", async (bidData) => {
+    const bid = bidData.newBid;
+    const bidId = bidData.itemId;
+    console.log("bid:", bid, "bidId:", bidId);
+
     // Listen for new bid from clients
+    const product = await Products.findById(bidId);
+    let currentBid = product.currentBid;
     if (bid > currentBid) {
       currentBid = bid;
       console.log(`new bid set to ${currentBid}`);
-      io.emit("currentBid", currentBid);
+      io.emit("currentBid", {"newBid":currentBid, "itemId": bidId});
     }
-  });
+});
 });
