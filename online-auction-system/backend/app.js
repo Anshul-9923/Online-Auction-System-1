@@ -101,7 +101,7 @@ app.post("/products", upload.single("img"), async (req, res) => {
 app.get('/products/search', async (req, res) => {
   try {
     const searchQuery = req.query.query;
-    const products = await Products.find({ name: { $regex: searchQuery, $options: 'i' } });
+    const products = await Products.find({ name: { $regex: searchQuery, $options: 'i' } }).limit(15);
     res.json(products);
   } catch (err) {
     console.error(err);
