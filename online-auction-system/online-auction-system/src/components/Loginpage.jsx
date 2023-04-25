@@ -1,17 +1,56 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+
 
 const Loginpage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
   useEffect(() => {
+    // Initialize Firebase
+    const firebaseConfig = {
+      // replace with your Firebase project's API keys
+      apiKey: "AIzaSyC8fwVcnQ8UU1eneLFpzseqfj3e_TpzAck",
+      authDomain: "online-auction-system-b0dc5.firebaseapp.com",
+      projectId: "online-auction-system-b0dc5",
+      storageBucket: "online-auction-system-b0dc5.appspot.com",
+      messagingSenderId: "77490244258",
+      appId: "1:77490244258:web:1f982fa5673418ed0fe5fb"
+    };
+    initializeApp(firebaseConfig);
+
     document.title = "Login";
   }, []);
 
-  const handelSubmit = () => {
-    
+const login = async (email, password) => {
+  try {
+    const auth = getAuth();
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    return user;
+  } catch (error) {
+    // Handle error
+    console.error(error);
+    throw error;
   }
+};
 
+  const logIn = async (e) => {
+    e.preventDefault();
+    try {
+      const user = await login(email, password);
+      // Handle successful login
+      navigate('/');
+    } catch (error) {
+      setError(error.message);
+    }
+  };
   return (
     <>
       <Navbar />
@@ -20,10 +59,10 @@ const Loginpage = () => {
           <h2 className="text-2xl font-bold text-gray-800 mb-6">
             Welcome Back!
           </h2>
-          <form action="#" method="POST">
+          <form>
             <div className="mb-4">
               <label
-                for="email"
+                htmlFor="email"
                 className="block text-gray-700 font-semibold mb-2"
               >
                 Email Address
@@ -32,13 +71,16 @@ const Loginpage = () => {
                 type="email"
                 name="email"
                 id="email"
+                placeholder="Your email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="border border-gray-400 p-2 w-full rounded-lg"
                 required
               />
             </div>
             <div className="mb-4">
               <label
-                for="password"
+                htmlFor="password"
                 className="block text-gray-700 font-semibold mb-2"
               >
                 Password
@@ -47,13 +89,16 @@ const Loginpage = () => {
                 type="password"
                 name="password"
                 id="password"
+                placeholder="Your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="border border-gray-400 p-2 w-full rounded-lg"
                 required
               />
             </div>
             <button
               className="bg-gray-800 text-white py-2 px-4 rounded-lg font-semibold w-full"
-              onClick={() => handelSubmit()}
+              onClick={e => logIn(e)}
             >
               Login
             </button>
