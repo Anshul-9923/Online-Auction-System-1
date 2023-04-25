@@ -10,13 +10,15 @@ const Search = () => {
 
     // Fetch products from the server based on search query
     if (inputValue.length > 0) {
-      console.log("working.....")
-      await axios.get(`http://localhost:3000/products/search?query=${inputValue}`).then((res) => {
-        console.log(res.data);
-        setSuggestions(res.data);
-      });
-    //   const products = await response.json();
-    //   setSuggestions(products);
+      console.log("working.....");
+      await axios
+        .get(`http://localhost:3000/products/search?query=${inputValue}`)
+        .then((res) => {
+          console.log(res.data);
+          setSuggestions(res.data);
+        });
+      //   const products = await response.json();
+      //   setSuggestions(products);
     } else {
       setSuggestions([]);
     }
@@ -45,11 +47,21 @@ const Search = () => {
         </svg>
       </div>
 
-      <ul id="suggestionsList" className="bg-white flex flex-col border p-2 rounded-xl mt-4">
-        {suggestions.map((product, key) => (
-          <li className="hover:bg-black hover:text-white p-2 rounded-xl" key={key}>{product.name}</li>
-        ))}
-      </ul>
+      {suggestions.length > 0 && (
+        <ul
+          id="suggestionsList"
+          className="bg-white flex flex-col border p-2 rounded-xl mt-4"
+        >
+          {suggestions.map((product, key) => (
+            <li
+              className="hover:bg-black hover:text-white p-2 rounded-xl"
+              key={key}
+            >
+              {product.name}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
